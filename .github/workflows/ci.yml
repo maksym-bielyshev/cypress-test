@@ -13,7 +13,7 @@ jobs:
          node-version: '20.x'
 
       - name: Install dependencies
-      - run: 
+        run: 
           npm install
           npm ci
       # Install npm dependencies, cache them correctly
