@@ -20,11 +20,8 @@ jobs:
     - name: Install dependencies (force resolve conflicts)
       run: npm install --force
 
-    - name: Update Angular CLI to version 9
-      run: npx ng update @angular/cli@9
-
     - name: Update Angular CLI to next major version
-      run: npx ng update @angular/cli17
+      run: npx ng update @angular/cli@latest
 
     - name: Update Angular Core
       run: npx ng update @angular/core
