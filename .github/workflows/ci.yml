@@ -1,48 +1,29 @@
-name: Cypress Tests
+name: Build and Test Angular App
 
 on:
   workflow_dispatch:
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - name: Checkout Code
+      uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.x'
-          cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm install
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '12.x'
 
-      - name: Build Angular Application
-        run: npm run build -- --prod
+    - name: Install Dependencies
+      run: npm install
 
-      - name: Install Cypress
-        run: npm install cypress --save-dev
+    - name: Run Lint
+      run: npm run lint
 
-      - name: Run Cypress Tests
-        run: npx cypress run
-      - name: Create Artifacts Directory
-        run: |
-          mkdir -p cypress/screenshots
-          mkdir -p cypress/videos
+    - name: Build
+      run: npm run build -- --prod
 
-      - name: Upload Cypress Screenshots (if tests fail)
-        uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
-
-      - name: Upload Cypress Videos
-        uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: cypress-videos
-          path: cypress/videos
+    - name: Run Tests
+      run: npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
