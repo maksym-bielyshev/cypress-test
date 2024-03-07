@@ -1,10 +1,10 @@
-name: CI Workflow
+name: Angular Update Workflow
 
 on:
   workflow_dispatch:
 
 jobs:
-  build-and-test:
+  update-angular:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,21 +14,24 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20.x'
+        node-version: '16.x' # Recommended to match the Node.js version with Angular compatibility
         cache: 'npm'
 
-    - name: Install dependencies (force resolve conflicts)
-      run: npm install --force
+    - name: Install Current Dependencies
+      run: npm install
 
-    - name: Update Angular CLI to next major version
-      run: npx ng update @angular/cli@latest
+    - name: Update Angular CLI to v9
+      run: npx ng update @angular/cli@9 --force
 
-    - name: Update Angular Core
-      run: npx ng update @angular/core
+    - name: Update Angular CLI to v10
+      run: npx ng update @angular/cli@10 --force
+    - name: Update Angular CLI to v11
+      run: npx ng update @angular/cli@11 --force
 
-    - name: Build Project with OpenSSL Legacy Provider
-      env:
-        NODE_OPTIONS: --openssl-legacy-provider
+    - name: Update Angular CLI to Latest
+      run: npx ng update @angular/cli@latest --force
+
+    - name: Build Project
       run: npm run build
 
     - name: Run Tests
