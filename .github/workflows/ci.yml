@@ -1,10 +1,10 @@
-name: Angular Update Workflow
+name: CI Workflow
 
 on:
   workflow_dispatch:
 
 jobs:
-  update-angular:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,23 +14,13 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '16.x' # Recommended to match the Node.js version with Angular compatibility
+        node-version: '16.x' # It's a good practice to use an LTS version of Node.js
         cache: 'npm'
 
-    - name: Install Current Dependencies
-      run: npm install
+    - name: Install dependencies (resolve conflicts)
+      run: npm install --legacy-peer-deps
 
-    - name: Update Angular CLI to v9
-      run: npx ng update @angular/cli@9 --force
-
-    - name: Update Angular CLI to v10
-      run: npx ng update @angular/cli@10 --force
-    - name: Update Angular CLI to v11
-      run: npx ng update @angular/cli@11 --force
-
-    - name: Update Angular CLI to Latest
-      run: npx ng update @angular/cli@latest --force
-
+    # Include your other workflow steps here (e.g., build, test)
     - name: Build Project
       run: npm run build
 
