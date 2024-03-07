@@ -14,8 +14,8 @@ jobs:
           node-version: '20.x'
           cache: 'npm'
 
-      - name: Install dependencies (with legacy peer deps)
-        run: npm install --legacy-peer-deps
+      - name: Install dependencies (force resolution)
+        run: npm install --force
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
