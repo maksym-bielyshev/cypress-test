@@ -14,7 +14,7 @@ jobs:
           node-version: '20.x'
           cache: 'npm'
 
-      - name: Install dependencies (force resolution)
+      - name: Install dependencies (resolve conflicts)
         run: npm install --force
 
       - name: Cypress run
