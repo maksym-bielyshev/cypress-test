@@ -20,7 +20,13 @@ jobs:
     - name: Install dependencies (force resolve conflicts)
       run: npm install --force
 
-    - name: Build Project
+    - name: Update Angular CLI and Core
+      run: npx ng update @angular/cli @angular/core
+
+    - name: Build Project with OpenSSL Legacy Provider
       env:
         NODE_OPTIONS: --openssl-legacy-provider
       run: npm run build
+
+    - name: Run Tests
+      run: npm test
